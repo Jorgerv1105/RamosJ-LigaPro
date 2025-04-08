@@ -13,7 +13,7 @@ namespace RamosJ_LigaPro.Controllers
             var equipos = repository.DevuelveListadoEquipos();
 
             equipos = equipos.OrderBy(item => item.PartidosGanados);
-            equipos = equipos.Where(item => item.Nombre == "Liga de Quito");
+            equipos = equipos.Where(item => item.Nombre == "Barcelona SC");
             return View(equipos);
         }
     }
