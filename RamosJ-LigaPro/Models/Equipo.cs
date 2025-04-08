@@ -19,5 +19,6 @@ namespace RamosJ_LigaPro.Models
         public string PartidosEmpatados { get; set; }
         [Range(0, 100)]
         public string PartidosPerdidos { get; set; }
+
     }
 }
