@@ -12,13 +12,13 @@ namespace RamosJ_LigaPro.Models
         [DisplayName("Nombre del equipo")]
         public string Nombre { get; set; }
         [Range(0, 100)]
-        public string PartidosJugados { get; set; }
+        public int PartidosJugados { get; set; }
         [Range(0, 100)]
-        public string PartidosGanados { get; set; }
+        public int PartidosGanados { get; set; }
         [Range(0, 100)]
-        public string PartidosEmpatados { get; set; }
+        public int PartidosEmpatados { get; set; }
         [Range(0, 100)]
-        public string PartidosPerdidos { get; set; }
+        public int PartidosPerdidos { get; set; }
 
     }
 }
