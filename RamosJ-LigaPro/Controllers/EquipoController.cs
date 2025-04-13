@@ -50,6 +50,6 @@ namespace RamosJ_LigaPro.Controllers
                 return View();
             }
         }
-           
+
     }
 }

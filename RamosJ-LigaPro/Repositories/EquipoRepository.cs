@@ -4,15 +4,10 @@ namespace RamosJ_LigaPro.Repositories
 {
     public class EquipoRepository
     {
-        public IEnumerable<Equipo> Equipos;
-        public EquipoRepository()
+        // Lista estática para mantener los datos en memoria durante el ciclo de vida de la app
+        public static List<Equipo> Equipos = new List<Equipo>
         {
-            Equipos = DevuelveListadoEquipos();
-        }
-        public IEnumerable<Equipo> DevuelveListadoEquipos()
-        {
-            List<Equipo> equipos = new List<Equipo>();
-            Equipo equipo1 = new Equipo
+            new Equipo
             {
                 Id = 1,
                 Nombre = "Barcelona",
@@ -21,9 +16,8 @@ namespace RamosJ_LigaPro.Repositories
                 PartidosEmpatados = 2,
                 PartidosPerdidos = 1,
                 Puntos = 23
-            };
-            equipos.Add(equipo1);
-            Equipo equipo2 = new Equipo
+            },
+            new Equipo
             {
                 Id = 2,
                 Nombre = "Emelec",
@@ -32,9 +26,8 @@ namespace RamosJ_LigaPro.Repositories
                 PartidosEmpatados = 3,
                 PartidosPerdidos = 2,
                 Puntos = 18
-            };
-            equipos.Add(equipo2);
-            Equipo equipo3 = new Equipo
+            },
+            new Equipo
             {
                 Id = 3,
                 Nombre = "Liga",
@@ -43,9 +36,8 @@ namespace RamosJ_LigaPro.Repositories
                 PartidosEmpatados = 4,
                 PartidosPerdidos = 2,
                 Puntos = 16
-            };
-            equipos.Add(equipo3);
-            Equipo equipo4 = new Equipo
+            },
+            new Equipo
             {
                 Id = 4,
                 Nombre = "Libertad FC",
@@ -54,9 +46,8 @@ namespace RamosJ_LigaPro.Repositories
                 PartidosEmpatados = 5,
                 PartidosPerdidos = 2,
                 Puntos = 14
-            };
-            equipos.Add(equipo4);
-            Equipo equipo5 = new Equipo
+            },
+            new Equipo
             {
                 Id = 5,
                 Nombre = "U.Catolica",
@@ -64,20 +55,30 @@ namespace RamosJ_LigaPro.Repositories
                 PartidosGanados = 2,
                 PartidosEmpatados = 6,
                 PartidosPerdidos = 2,
-                Puntos = 8
-            };
-            equipos.Add(equipo5);
-            return equipos;
+                Puntos = 12
+            }
+        };
+
+        public IEnumerable<Equipo> DevuelveListadoEquipos()
+        {
+            return Equipos;
         }
+
         public Equipo DevuelveEquipoPorID(int Id)
         {
-
-            var equipo = Equipos.First(item => item.Id == Id);
-            return equipo;
+            return Equipos.FirstOrDefault(e => e.Id == Id);
         }
-        public bool ActualizaEquipo(int Id, Equipo equipo)
+
+        public bool ActualizaEquipo(int Id, Equipo equipoActualizado)
         {
-            return true;
+            var index = Equipos.FindIndex(e => e.Id == Id);
+            if (index >= 0)
+            {
+                equipoActualizado.Puntos = (equipoActualizado.PartidosGanados * 3) + equipoActualizado.PartidosEmpatados;
+                Equipos[index] = equipoActualizado;
+                return true;
+            }
+            return false;
         }
     }
 }

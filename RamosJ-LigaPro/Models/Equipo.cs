@@ -20,7 +20,15 @@ namespace RamosJ_LigaPro.Models
         [Range(0, 100)]
         public int PartidosPerdidos { get; set; }
         [Range(0, 100)]
-        public int Puntos { get; set; }
+        public int Puntos
+        {
+            get
+            {
+                return (PartidosGanados * 3) + PartidosEmpatados;
+            }
+            set { }
+        }
+
 
     }
 }

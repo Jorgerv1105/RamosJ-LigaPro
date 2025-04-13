@@ -1,58 +1,76 @@
 ﻿@model RamosJ_LigaPro.Models.Equipo
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Editar Equipo";
+
+	// Diccionario de logos por nombre de equipo
+	var logos = new Dictionary<string, string>
+	{
+		{ "Barcelona", "https://upload.wikimedia.org/wikipedia/commons/6/6a/Barcelona_Sporting_Club_Logo.png" },
+		{ "Emelec", "https://logodownload.org/wp-content/uploads/2018/04/emelec-logo-escudo.png" },
+		{ "Liga", "https://upload.wikimedia.org/wikipedia/commons/5/50/LOGOS_5TA._ESTRELLA_I.png" },
+		{ "Libertad FC", "https://upload.wikimedia.org/wikipedia/en/b/b8/Libertad_FC_Ecuador.png" },
+		{ "U.Catolica", "https://upload.wikimedia.org/wikipedia/commons/5/56/Escudo_U_Catolica.png" }
+	};
+
+	string logoUrl = logos.ContainsKey(Model.Nombre) ? logos[Model.Nombre] : "https://upload.wikimedia.org/wikipedia/commons/1/1d/LigaPro_Ecuabet_Logo.png";
 }
 
-<h1>Edit</h1>
+<h2>@Model.Nombre</h2>
 
-<h4>Equipo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PartidosJugados" class="control-label"></label>
-                <input asp-for="PartidosJugados" class="form-control" />
-                <span asp-validation-for="PartidosJugados" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PartidosGanados" class="control-label"></label>
-                <input asp-for="PartidosGanados" class="form-control" />
-                <span asp-validation-for="PartidosGanados" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PartidosEmpatados" class="control-label"></label>
-                <input asp-for="PartidosEmpatados" class="form-control" />
-                <span asp-validation-for="PartidosEmpatados" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PartidosPerdidos" class="control-label"></label>
-                <input asp-for="PartidosPerdidos" class="form-control" />
-                <span asp-validation-for="PartidosPerdidos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<img src="@logoUrl" alt="Logo de @Model.Nombre" style="height: 100px;" />
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<p>Este es el equipo <strong>@Model.Nombre</strong>, uno de los grandes del fútbol ecuatoriano.</p>
+
+<form asp-action="Edit" method="post">
+	<input type="hidden" asp-for="Id" />
+
+	<div class="mb-3">
+		<label asp-for="Nombre" class="form-label"></label>
+		<input asp-for="Nombre" class="form-control" readonly />
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="PartidosJugados" class="form-label"></label>
+		<input asp-for="PartidosJugados" class="form-control" id="pj" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="PartidosGanados" class="form-label"></label>
+		<input asp-for="PartidosGanados" class="form-control" id="pg" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="PartidosEmpatados" class="form-label"></label>
+		<input asp-for="PartidosEmpatados" class="form-control" id="pe" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="PartidosPerdidos" class="form-label"></label>
+		<input asp-for="PartidosPerdidos" class="form-control" id="pp" />
+	</div>
+
+	<!-- Muestra total puntos -->
+	<div class="alert alert-info" id="resultadoPuntos">
+		Total de puntos: <span id="puntosTotal">0</span>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Guardar</button>
+	<a asp-action="List" class="btn btn-secondary">Cancelar</a>
+</form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script>
+		function calcularPuntos() {
+			const pg = parseInt(document.getElementById("pg").value) || 0;
+			const pe = parseInt(document.getElementById("pe").value) || 0;
+			const puntos = (pg * 3) + (pe * 1);
+			document.getElementById("puntosTotal").textContent = puntos;
+		}
+
+		// Calcula puntos al cambiar valores
+		document.getElementById("pg").addEventListener("input", calcularPuntos);
+		document.getElementById("pe").addEventListener("input", calcularPuntos);
+
+		// Cálculo inicial
+		window.onload = calcularPuntos;
+	</script>
 }
