@@ -17,8 +17,9 @@ namespace RamosJ_LigaPro.Controllers
  
             var equipos = _repository.DevuelveListadoEquipos();
 
-            equipos = equipos.OrderBy(item => item.PartidosGanados);
-            //equipos = equipos.Where(item => item.Nombre == "Barcelona SC");
+            equipos = equipos.OrderByDescending(item => item.Puntos);
+
+
             return View(equipos);
 
         }
