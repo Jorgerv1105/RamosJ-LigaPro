@@ -69,7 +69,7 @@ namespace RamosJ_LigaPro.Repositories
             return Equipos.FirstOrDefault(e => e.Id == Id);
         }
 
-        public bool ActualizaEquipo(int Id, Equipo equipoActualizado)
+        public bool ActualizaEquipo(int Id, Equipo equipoActualizado) //Centencia para realizar la suma de los puntos ya sea´para partidos ganados o empratados
         {
             var index = Equipos.FindIndex(e => e.Id == Id);
             if (index >= 0)

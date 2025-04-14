@@ -3,7 +3,8 @@
 @{
 	ViewData["Title"] = "Editar Equipo";
 
-	// Diccionario de logos por nombre de equipo
+	// Logos por nombre de equipo
+	//Uso de la funcion @Model para la modificacion de los nombres en la descripcion breve de los equipos
 	var logos = new Dictionary<string, string>
 	{
 		{ "Barcelona", "https://upload.wikimedia.org/wikipedia/commons/6/6a/Barcelona_Sporting_Club_Logo.png" },
@@ -16,7 +17,8 @@
 	string logoUrl = logos.ContainsKey(Model.Nombre) ? logos[Model.Nombre] : "https://upload.wikimedia.org/wikipedia/commons/1/1d/LigaPro_Ecuabet_Logo.png";
 }
 
-<h2>@Model.Nombre</h2>
+ 
+<h2>@Model.Nombre</h2> 
 
 <img src="@logoUrl" alt="Logo de @Model.Nombre" style="height: 100px;" />
 
@@ -48,7 +50,6 @@
 		<input asp-for="PartidosPerdidos" class="form-control" id="pp" />
 	</div>
 
-	<!-- Muestra total puntos -->
 	<div class="alert alert-info" id="resultadoPuntos">
 		Total de puntos: <span id="puntosTotal">0</span>
 	</div>
@@ -57,7 +58,7 @@
 	<a asp-action="List" class="btn btn-secondary">Cancelar</a>
 </form>
 
-@section Scripts {
+@section Scripts { 
 	<script>
 		function calcularPuntos() {
 			const pg = parseInt(document.getElementById("pg").value) || 0;
@@ -65,8 +66,8 @@
 			const puntos = (pg * 3) + (pe * 1);
 			document.getElementById("puntosTotal").textContent = puntos;
 		}
-
-		// Calcula puntos al cambiar valores
+		
+		// Calcula puntos al cambiar valores para posteriormente guardar
 		document.getElementById("pg").addEventListener("input", calcularPuntos);
 		document.getElementById("pe").addEventListener("input", calcularPuntos);
 

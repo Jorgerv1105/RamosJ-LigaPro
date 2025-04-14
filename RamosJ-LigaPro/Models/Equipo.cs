@@ -20,7 +20,9 @@ namespace RamosJ_LigaPro.Models
         [Range(0, 100)]
         public int PartidosPerdidos { get; set; }
         [Range(0, 100)]
-        public int Puntos
+        public int Puntos    //Creacion del parametro puntos para su posterior modificacion que
+                             //retorne el valor de partidos ganados por 3 y sume los partidos
+                             //empatados en este caso tomandolo como un punto
         {
             get
             {
