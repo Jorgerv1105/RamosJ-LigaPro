@@ -51,11 +51,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var equipo in ViewData["EquiposConMasPresupuesto"] as List<dynamic>)
+        @if (ViewData["EquiposConMasPresupuesto"] is List<dynamic> equiposConMasPresupuesto)
+        {
+            @foreach (var equipo in equiposConMasPresupuesto)
+            {
+                <tr>
+                    <td>@equipo.Equipo</td>
+                    <td>@equipo.Presupuesto</td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@equipo.Equipo</td>
-                <td>@equipo.Presupuesto</td>
+                <td colspan="2">No hay datos disponibles.</td>
             </tr>
         }
     </tbody>

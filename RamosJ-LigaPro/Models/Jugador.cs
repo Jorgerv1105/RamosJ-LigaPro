@@ -12,7 +12,7 @@ namespace RamosJ_LigaPro.Models
         public int Asistencias { get; set; }
         public int PartidosJugados { get; set; }
         public int Sueldo { get; set; }
-        public ICollection<Plantilla> Plantillas { get; set; } = new List<Plantilla>();
+        public ICollection<Plantilla>? Plantillas { get; set; } = new List<Plantilla>();
 
     }
 }

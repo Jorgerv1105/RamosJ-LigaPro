@@ -29,7 +29,7 @@ namespace RamosJ_LigaPro.Models
             }
             set { }
         }
-        public ICollection<Plantilla> Plantillas { get; set; } = new List<Plantilla>();
+        public ICollection<Plantilla>? Plantillas { get; set; } = new List<Plantilla>();
 
 
     }

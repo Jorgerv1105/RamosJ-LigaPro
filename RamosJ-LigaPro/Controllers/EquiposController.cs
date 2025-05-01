@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RamosJ_LigaPro.Models;
+using RamosJ_LigaPro.ViewModel;
 
 namespace RamosJ_LigaPro.Controllers
 {
@@ -19,20 +20,24 @@ namespace RamosJ_LigaPro.Controllers
         }
 
         // GET: Equipoes
-        public async Task<IActionResult> Index(int? equipoId)
+        public async Task<IActionResult> Index()
         {
             var equipos = await _context.Equipo.ToListAsync();
-            ViewBag.Equipos = new SelectList(equipos, "Id", "Nombre");
 
-            var jugadores = _context.Jugador.Include(j => j.Plantillas).ThenInclude(p => p.Equipo).AsQueryable();
+            var jugadores = await _context.Jugador
+                .Include(j => j.Plantillas)
+                .ThenInclude(p => p.Equipo)
+                .ToListAsync();
 
-            if (equipoId.HasValue)
+            var viewModel = new ViewModelJugador
             {
-                jugadores = jugadores.Where(j => j.Plantillas.Any(p => p.EquipoId == equipoId));
-            }
+                Equipos = equipos,
+                Jugadores = jugadores
+            };
 
-            return View(await jugadores.ToListAsync());
+            return View(viewModel); 
         }
+
 
         // GET: Equipoes/Details/5
         public async Task<IActionResult> Details(int? id)
