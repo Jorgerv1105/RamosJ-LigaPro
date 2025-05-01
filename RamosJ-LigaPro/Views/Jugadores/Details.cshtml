@@ -1,0 +1,39 @@
+﻿@model RamosJ_LigaPro.Models.Jugador
+@{
+    ViewData["Title"] = "Detalles del Jugador";
+}
+
+<h2>Detalles del Jugador</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Nombre</dd>
+
+        <dt class="col-sm-2">Dorsal</dt>
+        <dd class="col-sm-10">@Model.Dorsal</dd>
+
+        <dt class="col-sm-2">Goles</dt>
+        <dd class="col-sm-10">@Model.Goles</dd>
+
+        <dt class="col-sm-2">Asistencias</dt>
+        <dd class="col-sm-10">@Model.Asistencias</dd>
+
+        <dt class="col-sm-2">Partidos Jugados</dt>
+        <dd class="col-sm-10">@Model.PartidosJugados</dd>
+
+        <dt class="col-sm-2">Sueldo</dt>
+        <dd class="col-sm-10">$@Model.Sueldo</dd>
+
+        <dt class="col-sm-2">Equipos</dt>
+        <dd class="col-sm-10">
+            @foreach (var plantilla in Model.Plantillas)
+            {
+                <span class="badge badge-info">@plantilla.Equipo.Nombre</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

@@ -1,0 +1,62 @@
+﻿@model RamosJ_LigaPro.ViewModel.ViewModelJugador
+
+@{
+    ViewData["Title"] = "Listado de Equipos";
+}
+
+<h1>Listado de Equipos</h1>
+
+<p>
+    <a class="btn btn-outline-success" asp-action="Create">Crear nuevo equipo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().PartidosJugados)</th>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().PartidosGanados)</th>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().PartidosEmpatados)</th>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().PartidosPerdidos)</th>
+            <th>@Html.DisplayNameFor(model => model.Equipos.First().Puntos)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Equipos)
+        {
+            <tr>
+                <td>@Html.DisplayFor(_ => item.Nombre)</td>
+                <td>@Html.DisplayFor(_ => item.PartidosJugados)</td>
+                <td>@Html.DisplayFor(_ => item.PartidosGanados)</td>
+                <td>@Html.DisplayFor(_ => item.PartidosEmpatados)</td>
+                <td>@Html.DisplayFor(_ => item.PartidosPerdidos)</td>
+                <td>@Html.DisplayFor(_ => item.Puntos)</td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Jugadores</h2>
+@if (Model.Jugadores.Any())
+{
+    <ul>
+        @foreach (var jugador in Model.Jugadores)
+        {
+            <li>@jugador.Nombre</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay jugadores para este equipo.</p>
+}
+
+<footer>
+    <p>Nombre: Jorge Ramos, Daniel Mena, Josue Ayala<br>Carrera: Ingeniería en Software</p>
+</footer>

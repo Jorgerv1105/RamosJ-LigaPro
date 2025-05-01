@@ -1,0 +1,41 @@
+﻿@model RamosJ_LigaPro.Models.Jugador
+@{
+    ViewData["Title"] = "Crear Jugador";
+}
+
+<h2>Crear Jugador</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Dorsal" class="control-label"></label>
+        <input asp-for="Dorsal" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Goles" class="control-label"></label>
+        <input asp-for="Goles" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Asistencias" class="control-label"></label>
+        <input asp-for="Asistencias" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PartidosJugados" class="control-label"></label>
+        <input asp-for="PartidosJugados" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Sueldo" class="control-label"></label>
+        <input asp-for="Sueldo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="equipoId">Equipo</label>
+        <select name="equipoId" class="form-control" asp-items="ViewBag.Equipos">
+            <option value="">-- Selecciona un equipo --</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -1,0 +1,58 @@
+﻿
+@model IEnumerable<RamosJ_LigaPro.Models.Jugador>
+@{
+    ViewData["Title"] = "Lista de Jugadores";
+}
+
+<h2>Jugadores</h2>
+
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group">
+        <label for="equipoId" class="mr-2">Filtrar por equipo:</label>
+        <select name="equipoId" class="form-control mr-2" asp-items="ViewBag.Equipos">
+            <option value="">-- Todos los equipos --</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Dorsal</th>
+            <th>Goles</th>
+            <th>Asistencias</th>
+            <th>Partidos</th>
+            <th>Sueldo</th>
+            <th>Equipos</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jugador in Model)
+        {
+            <tr>
+                <td>@jugador.Nombre</td>
+                <td>@jugador.Dorsal</td>
+                <td>@jugador.Goles</td>
+                <td>@jugador.Asistencias</td>
+                <td>@jugador.PartidosJugados</td>
+                <td>$@jugador.Sueldo</td>
+                <td>
+                    @foreach (var plantilla in jugador.Plantillas)
+                    {
+                        <span class="badge badge-info">@plantilla.Equipo.Nombre</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@jugador.Id" class="btn btn-sm btn-info">Detalles</a>
+                    <a asp-action="Edit" asp-route-id="@jugador.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@jugador.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success">Agregar nuevo jugador</a>
