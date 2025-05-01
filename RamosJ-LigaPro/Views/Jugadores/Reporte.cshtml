@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Reporte de Jugadores y Equipos";
+}
+
+<h2>Reporte de Jugadores y Equipos</h2>
+
+<h3>Top 5 Goleadores</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Goles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jugador in ViewData["Goleadores"] as List<RamosJ_LigaPro.Models.Jugador>)
+        {
+            <tr>
+                <td>@jugador.Nombre</td>
+                <td>@jugador.Goles</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Top 5 Jugadores con Más Asistencias</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Asistencias</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jugador in ViewData["JugadoresConMasAsistencias"] as List<RamosJ_LigaPro.Models.Jugador>)
+        {
+            <tr>
+                <td>@jugador.Nombre</td>
+                <td>@jugador.Asistencias</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Top 5 Equipos con Más Presupuesto</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Equipo</th>
+            <th>Presupuesto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var equipo in ViewData["EquiposConMasPresupuesto"] as List<dynamic>)
+        {
+            <tr>
+                <td>@equipo.Equipo</td>
+                <td>@equipo.Presupuesto</td>
+            </tr>
+        }
+    </tbody>
+</table>

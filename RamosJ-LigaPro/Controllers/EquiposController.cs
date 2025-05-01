@@ -9,19 +9,29 @@ using RamosJ_LigaPro.Models;
 
 namespace RamosJ_LigaPro.Controllers
 {
-    public class EquipoesController : Controller
+    public class EquiposController : Controller
     {
         private readonly DbContext _context;
 
-        public EquipoesController(DbContext context)
+        public EquiposController(DbContext context)
         {
             _context = context;
         }
 
         // GET: Equipoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? equipoId)
         {
-            return View(await _context.Equipo.ToListAsync());
+            var equipos = await _context.Equipo.ToListAsync();
+            ViewBag.Equipos = new SelectList(equipos, "Id", "Nombre");
+
+            var jugadores = _context.Jugador.Include(j => j.Plantillas).ThenInclude(p => p.Equipo).AsQueryable();
+
+            if (equipoId.HasValue)
+            {
+                jugadores = jugadores.Where(j => j.Plantillas.Any(p => p.EquipoId == equipoId));
+            }
+
+            return View(await jugadores.ToListAsync());
         }
 
         // GET: Equipoes/Details/5
@@ -33,7 +43,10 @@ namespace RamosJ_LigaPro.Controllers
             }
 
             var equipo = await _context.Equipo
+                .Include(e => e.Plantillas)
+                    .ThenInclude(p => p.Jugador)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (equipo == null)
             {
                 return NotFound();
@@ -85,7 +98,7 @@ namespace RamosJ_LigaPro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,PartidosJugados,PartidosGanados,PartidosEmpatados,PartidosPerdidos,Puntos")] Equipo equipo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,PartidosJugados,PartidosGanados,PartidosEmpatados,PartidosPerdidos")] Equipo equipo)
         {
             if (id != equipo.Id)
             {
@@ -152,5 +165,6 @@ namespace RamosJ_LigaPro.Controllers
         {
             return _context.Equipo.Any(e => e.Id == id);
         }
+        
     }
 }
